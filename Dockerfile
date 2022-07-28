@@ -20,9 +20,7 @@ COPY ./bin/* /fly/bin/
 
 FROM flyio/stolon:2e719de as stolon
 
-ARG TS_VERSION=2.7.2
-ARG PG_MAJOR_VERSION=14
-FROM timescale/timescaledb:${TS_VERSION}-pg${PG_MAJOR_VERSION} AS timescale
+FROM timescale/timescaledb:2.7.2-pg14 AS timescale
 
 FROM wrouesnel/postgres_exporter:latest AS postgres_exporter
 
