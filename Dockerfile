@@ -41,7 +41,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
     postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR-scripts \
     timescaledb-2-postgresql-$PG_MAJOR \ 
-    && apt autoremove -y
+    && apt autoremove -y \
+    && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 COPY --from=stolon /go/src/app/bin/* /usr/local/bin/
 COPY --from=postgres_exporter /postgres_exporter /usr/local/bin/
