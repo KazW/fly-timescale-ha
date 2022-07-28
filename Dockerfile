@@ -44,6 +44,7 @@ COPY --from=stolon /go/src/app/bin/* /usr/local/bin/
 COPY --from=postgres_exporter /postgres_exporter /usr/local/bin/
 COPY --from=timescale /usr/local/lib/postgresql/timescaledb-*.so /usr/local/lib/postgresql/
 COPY --from=timescale /usr/local/share/postgresql/extension/timescaledb--*.sql /usr/local/share/postgresql/extension/
+COPY --from=timescale /usr/local/bin/timescaledb-* /usr/local/bin/
 
 ADD /scripts/* /fly/
 ADD /config/* /fly/
