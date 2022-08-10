@@ -20,6 +20,8 @@ COPY ./bin/* /fly/bin/
 
 FROM flyio/stolon:2e719de as stolon
 
+FROM timescale/timescaledb:2.7.2-pg14 AS timescale
+
 FROM wrouesnel/postgres_exporter:latest AS postgres_exporter
 
 FROM postgres:${PG_VERSION}
@@ -38,6 +40,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 COPY --from=stolon /go/src/app/bin/* /usr/local/bin/
 COPY --from=postgres_exporter /postgres_exporter /usr/local/bin/
+COPY --from=timescale /usr/local/lib/postgresql/timescaledb-*.so /usr/local/lib/postgresql/
+COPY --from=timescale /usr/local/share/postgresql/extension/timescaledb--*.sql /usr/local/share/postgresql/extension/
+COPY --from=timescale /usr/local/bin/timescaledb-* /usr/local/bin/
 
 ADD /scripts/* /fly/
 ADD /config/* /fly/
